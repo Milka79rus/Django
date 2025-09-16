@@ -1,6 +1,7 @@
 from django.http import HttpResponse
-from django.shortcuts import render, reverse
+from django.shortcuts import render
 from datetime import datetime
+from django.urls import reverse
 import os
 
 
