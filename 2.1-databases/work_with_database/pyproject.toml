@@ -1,0 +1,16 @@
+[tool.black]
+line-length = 88          # Максимальная длина строки
+target-version = ['py311']  # Версия Python проекта 
+skip-string-normalization = true  # Не менять кавычки автоматически
+include = '\.pyi?$'       # Форматировать все .py и .pyi файлы
+exclude = '''
+/(
+    \.git
+  | \.venv
+  | venv
+  | __pycache__
+  | migrations
+  | static
+  | media  
+)/
+'''
