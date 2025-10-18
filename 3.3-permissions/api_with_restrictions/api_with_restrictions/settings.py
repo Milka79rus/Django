@@ -74,10 +74,34 @@ TEMPLATES = [
 ]
 
 REST_FRAMEWORK = {
+    # Аутентификация пользователей
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
-    ]
+        'rest_framework.authentication.SessionAuthentication',
+    ],
+
+    # Права доступа по умолчанию
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',  # Разрешаем доступ всем (права переопределяем в ViewSet)
+    ],
+
+    # Подключаем фильтрацию (для AdvertisementFilter)
+    'DEFAULT_FILTER_BACKENDS': [
+        'django_filters.rest_framework.DjangoFilterBackend',
+    ],
+
+    # Лимиты запросов (throttling)
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.AnonRateThrottle',  # Лимиты для неавторизованных пользователей
+        'rest_framework.throttling.UserRateThrottle',  # Лимиты для авторизованных пользователей
+    ],
+    
+    'DEFAULT_THROTTLE_RATES': {
+        'anon': '10/min',   # неавторизованные пользователи
+        'user': '20/min',   # авторизованные пользователи
+    },
 }
+
 
 WSGI_APPLICATION = 'api_with_restrictions.wsgi.application'
 
@@ -91,6 +115,8 @@ DATABASES = {
         'NAME': 'netology_classified_ads',
         'HOST': '127.0.0.1',
         'PORT': '5432',
+        'USER': 'postgres',
+        'PASSWORD': 'ваш_пароль',
     }
 }
 
